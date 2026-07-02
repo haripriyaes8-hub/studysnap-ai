@@ -101,7 +101,7 @@ def init_db():
     """)
 
     # Seed default user if not exists
-    c.execute("INSERT OR IGNORE INTO users (id, name, email) VALUES (1, 'Aamy', 'aamy@studysnap.ai')")
+    c.execute("INSERT OR IGNORE INTO users (id, name, email) VALUES (1, 'Haripriya', 'haripriya@studysnap.ai')")
 
     conn.commit()
     conn.close()
@@ -119,7 +119,7 @@ def get_gemini_response(prompt: str, system_context: str = "") -> str:
         raise ValueError("GEMINI_API_KEY not set in environment")
 
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash-lite")
+    model = genai.GenerativeModel("gemini-2.5-flash")
 
     full_prompt = f"{system_context}\n\n{prompt}" if system_context else prompt
     response = model.generate_content(full_prompt)
@@ -140,6 +140,10 @@ def get_dashboard():
     """Return dashboard stats for the user."""
     conn = get_db()
     c = conn.cursor()
+
+    user_row = c.execute("SELECT name, email FROM users WHERE id=1").fetchone()
+    user_name = user_row["name"] if user_row else "Haripriya"
+    user_email = user_row["email"] if user_row else "haripriya@studysnap.ai"
 
     # Count notes
     notes_count = c.execute("SELECT COUNT(*) FROM notes WHERE user_id=1").fetchone()[0]
@@ -185,7 +189,7 @@ def get_dashboard():
     conn.close()
 
     return jsonify({
-        "user": {"name": "Aamy", "email": "aamy@studysnap.ai"},
+        "user": {"name": user_name, "email": user_email},
         "stats": {
             "notes": notes_count,
             "quizzes": quizzes_count,
