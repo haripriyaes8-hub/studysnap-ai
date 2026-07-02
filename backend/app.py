@@ -109,7 +109,7 @@ def init_db():
 init_db()
 
 # ──────────────────────────────────────────────
-# Gemini AI Helper
+# Gemini AI Helper t
 # ──────────────────────────────────────────────
 
 def get_gemini_response(prompt: str, system_context: str = "") -> str:
