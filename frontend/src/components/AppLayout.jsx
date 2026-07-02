@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   Box, AppBar, Toolbar, IconButton, Typography, useTheme, useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar, { DRAWER_WIDTH } from "./Sidebar";
+import api from "../utils/api";
 
 export default function AppLayout({ darkMode, onToggleDark }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  useEffect(() => {
+    api.get("/dashboard")
+      .then((data) => {
+        if (data && data.user) {
+          setUser(data.user);
+        }
+      })
+      .catch((err) => console.error("Error fetching user data:", err));
+  }, []);
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar
+        user={user}
         darkMode={darkMode}
         onToggleDark={onToggleDark}
         mobileOpen={mobileOpen}

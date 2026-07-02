@@ -27,7 +27,7 @@ const NAV_ITEMS = [
   { label: "Study Planner", icon: <CalendarMonthIcon />, path: "/planner" },
 ];
 
-export default function Sidebar({ darkMode, onToggleDark, mobileOpen, onMobileClose }) {
+export default function Sidebar({ user, darkMode, onToggleDark, mobileOpen, onMobileClose }) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -132,10 +132,10 @@ export default function Sidebar({ darkMode, onToggleDark, mobileOpen, onMobileCl
                 fontWeight: 700,
               }}
             >
-              A
+              {user?.name ? user.name.charAt(0).toUpperCase() : "H"}
             </Avatar>
             <Box>
-              <Typography variant="body2" fontWeight={600}>Haripriya</Typography>
+              <Typography variant="body2" fontWeight={600}>{user?.name || "Haripriya"}</Typography>
               <Typography variant="caption" sx={{ opacity: 0.65 }}>Student</Typography>
             </Box>
           </Box>

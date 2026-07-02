@@ -75,7 +75,7 @@ export default function Dashboard() {
           {new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })}
         </Typography>
         <Typography variant="h4" fontWeight={700} color="#fff" gutterBottom>
-          {greeting}, Haripriya! 👋
+          {greeting}, {data?.user?.name || "Haripriya"}! 👋
         </Typography>
         <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.8)", maxWidth: 420 }}>
           Ready to level up your studies? Your AI study buddy is here to help.
